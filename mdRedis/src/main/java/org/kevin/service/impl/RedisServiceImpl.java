@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RedisServiceImpl implements RedisService {
+    private static final double DEFAULT_SCORE = 13.0;
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -30,5 +32,13 @@ public class RedisServiceImpl implements RedisService {
 
     public void increment(String key){
         redisTemplate.opsForValue().increment(key, 1);
+    }
+
+    public void addZSet(String key, String value){
+        redisTemplate.opsForZSet().add(key, value, DEFAULT_SCORE);
+    }
+
+    public Double score(String key, String value){
+        return redisTemplate.opsForZSet().score(key, value);
     }
 }
