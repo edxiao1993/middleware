@@ -1,6 +1,6 @@
 package org.kevin.controller;
 
-import org.kevin.config.RedisLock;
+import org.kevin.config.RedisBasicLock;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class LockController {
 
     @Autowired
-    private RedisLock redisLock;
+    private RedisBasicLock redisBasicLock;
 
     @GetMapping("/lockRedis")
     public String lockRedis(){
@@ -26,7 +26,7 @@ public class LockController {
         String key = "try_redis_lock_" + productId;
         long time = System.currentTimeMillis();
         try{
-            if(!redisLock.tryLock(key, String.valueOf(time))){
+            if(!redisBasicLock.tryLock(key, String.valueOf(time))){
                 return "-1";
             }
             //TODO: operate this product...
@@ -34,7 +34,7 @@ public class LockController {
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            redisLock.unlock(key, String.valueOf(time));
+            redisBasicLock.unlock(key, String.valueOf(time));
         }
         return "-1";
     }
@@ -47,6 +47,7 @@ public class LockController {
         String productId = "0322";
         RLock lock = redissonClient.getLock("productId::" + productId);
         try{
+            // try to lock this product
             lock.tryLock(60, 20, TimeUnit.SECONDS);
             // TODO: operate this product
             return "1";

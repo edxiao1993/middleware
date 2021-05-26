@@ -15,7 +15,7 @@ import java.time.Duration;
  * @version 2021/5/26
  */
 @Component
-public class RedisLock {
+public class RedisBasicLock {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
