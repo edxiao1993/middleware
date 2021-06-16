@@ -14,9 +14,9 @@ try{
     // try to lock this product
     lock.tryLock(60, 20, TimeUnit.SECONDS);
     // TODO: operate this product
-} catch (InterruptedException e){
-    e.printStackTrace();
+} catch (e){
 } finally {
     lock.unlock();
 }
 ```
+
