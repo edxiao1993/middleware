@@ -1,6 +1,9 @@
 package org.kevin.config;
 
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.ReturnedMessage;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -9,26 +12,32 @@ import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * @author Kevin.Z
  * @version 2021/6/16
  */
 @Configuration
+@EnableRabbit
 public class RabbitMQConfiguration {
 
     @Bean
-    public CachingConnectionFactory cachingConnectionFactory(){
+    @Primary
+    public CachingConnectionFactory cachingConnectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.setHost("localhost");
-        connectionFactory.setPort(5679);
-        connectionFactory.setUsername("guest");
-        connectionFactory.setPassword("guest");
+        connectionFactory.setPort(5672);
+        connectionFactory.setUsername("admin");
+        connectionFactory.setPassword("admin");
+        connectionFactory.setVirtualHost("MyRabbit");
 
         connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.CORRELATED);
         connectionFactory.setPublisherReturns(true);
+
 
         connectionFactory.setChannelCacheSize(25);
 
@@ -36,18 +45,12 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public PooledChannelConnectionFactory pooledChannelConnectionFactory(){
-//        return new PooledChannelConnectionFactory();
-        return null;
-    }
-
-    @Bean
-    public RabbitAdmin rabbitAdmin(@Qualifier("cachingConnectionFactory") CachingConnectionFactory connectionFactory){
+    public RabbitAdmin rabbitAdmin(@Qualifier("cachingConnectionFactory") CachingConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(@Qualifier("cachingConnectionFactory") CachingConnectionFactory connectionFactory){
+    public RabbitTemplate rabbitTemplate(@Qualifier("cachingConnectionFactory") CachingConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMandatory(true);
 
@@ -55,9 +58,10 @@ public class RabbitMQConfiguration {
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override
             public void confirm(CorrelationData correlationData, boolean b, String s) {
-                System.out.println("correlationData = " + correlationData);
+                System.out.println("in confirm call back");
+                /*System.out.println("correlationData = " + correlationData);
                 System.out.println("b = " + b);
-                System.out.println("s = " + s);
+                System.out.println("s = " + s);*/
             }
         });
 
@@ -65,12 +69,12 @@ public class RabbitMQConfiguration {
         rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
             @Override
             public void returnedMessage(ReturnedMessage returnedMessage) {
-                System.out.println("returnedMessage.getMessage() = " + returnedMessage.getMessage());
+                System.out.println("in returns call back");
+                /*System.out.println("returnedMessage.getMessage() = " + returnedMessage.getMessage());
                 System.out.println("returnedMessage.getReplyText() = " + returnedMessage.getReplyText());
                 System.out.println("returnedMessage.getReplyCode() = " + returnedMessage.getReplyCode());
                 System.out.println("returnedMessage.getExchange() = " + returnedMessage.getExchange());
-                System.out.println("returnedMessage.getRoutingKey() = " + returnedMessage.getRoutingKey());
-
+                System.out.println("returnedMessage.getRoutingKey() = " + returnedMessage.getRoutingKey());*/
             }
         });
 
@@ -79,5 +83,11 @@ public class RabbitMQConfiguration {
         return rabbitTemplate;
     }
 
-
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        return factory;
+    }
 }
