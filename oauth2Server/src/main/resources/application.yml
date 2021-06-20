@@ -1,0 +1,20 @@
+server:
+  port: 8333
+
+spring:
+  application:
+    name: oauth2serverservice
+  datasource:
+    url: jdbc:mysql://localhost:3306/myblog?serverTimezone=GMT%2B8
+    username: root
+    password: root
+    hikari:
+      connection-timeout: 9000
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 30000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: org.kevin.model
