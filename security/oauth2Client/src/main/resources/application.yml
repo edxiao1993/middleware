@@ -1,0 +1,18 @@
+server:
+  port: 8331
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          password:
+            provider: javaboy
+            client-id: client
+            client-secret: secret
+            authorization-grant-type: password
+            scope: read:msg
+        provider:
+          javaboy:
+            authorization-uri: http://localhost:8333/oauth/authorize
+            token-uri: http://localhost:8333/oauth/token

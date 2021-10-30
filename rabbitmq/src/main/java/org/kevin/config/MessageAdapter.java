@@ -17,12 +17,17 @@ public class MessageAdapter extends MessageListenerAdapter {
 
         long sleepTime = 1000L * MyUtils.generateIntegerWithBound(5);
         TimeUnit.SECONDS.sleep(1);
-        System.out.println("e.toString() = " + new String(bs));
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-        if (message.getMessageProperties().getRedelivered()) {
+        if(MyUtils.generateIntegerWithBound(10) < 5) {
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            System.out.println("e.toString() = " + new String(bs));
+        } else {
+            System.out.println("damt it~");
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+        }
+        /*if (message.getMessageProperties().getRedelivered()) {
             System.out.println("already redelivered");
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
-        }
+        }*/
 
     }
 }

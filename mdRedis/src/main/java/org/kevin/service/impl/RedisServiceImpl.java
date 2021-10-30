@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Kevin.Z
  * @version 2021/5/17
@@ -40,5 +42,9 @@ public class RedisServiceImpl implements RedisService {
 
     public Double score(String key, String value){
         return redisTemplate.opsForZSet().score(key, value);
+    }
+
+    public void expireKey(String key, long duration){
+        redisTemplate.expire(key, duration, TimeUnit.SECONDS);
     }
 }
