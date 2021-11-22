@@ -23,3 +23,13 @@ high-level component：定义了 low-level 组件的组件。
 abstract Product factoryMethod(String type);
 抽象，留给子类实现 ｜ 产品，一般是某类产品共同的接口 ｜ 
 ```
+
+
+
+
+---
+### date November22, 2021,
+刚才，我想着打开iPad，参考书里的例子写个完整的Abstract Factory的用例的，结果我就刷了会儿微博，结果就是23号了～
+
+言归正传，工厂模式显然不适合单独出现，否则一大堆的 if 和 equals 会让 coder 恶心死的。  
+所以，结合别的设计模式，以及 enum 类型，优化下代码的编写，抽成方法之类的也是可以的。
