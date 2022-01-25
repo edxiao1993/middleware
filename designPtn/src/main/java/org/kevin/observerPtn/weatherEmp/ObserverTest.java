@@ -1,9 +1,9 @@
-package org.kevin.observerPtn.observerPtn.weatherEmp;
+package org.kevin.observerPtn.weatherEmp;
 
-import org.kevin.observerPtn.observerPtn.weatherEmp.weather.ObjectObserver;
-import org.kevin.observerPtn.observerPtn.weatherEmp.weather.RadioObserver;
-import org.kevin.observerPtn.observerPtn.weatherEmp.weather.TVObserver;
-import org.kevin.observerPtn.observerPtn.weatherEmp.weather.WeatherStation;
+import org.kevin.observerPtn.weatherEmp.weather.ObjectObserver;
+import org.kevin.observerPtn.weatherEmp.weather.RadioObserver;
+import org.kevin.observerPtn.weatherEmp.weather.TVObserver;
+import org.kevin.observerPtn.weatherEmp.weather.WeatherStation;
 
 /**
  * @author Kevin.Z

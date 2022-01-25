@@ -1,4 +1,4 @@
-package org.kevin.observerPtn.observerPtn.weatherEmp.weather;
+package org.kevin.observerPtn.weatherEmp.weather;
 
 import java.util.ArrayList;
 import java.util.List;
