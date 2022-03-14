@@ -1,6 +1,5 @@
 HELP.md
-**/target/
-**/.mvn/
+target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -19,7 +18,6 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-**/.idea/
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,7 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-
-### Mac OS ###
-.DS_Store
