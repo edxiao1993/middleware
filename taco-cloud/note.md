@@ -35,5 +35,20 @@ for the column, the default converter is: deliveryName -- delivery_name
   @Query(value = "SELECT * from tack_order WHERE delivery_city='Seattle'", nativeQuery = true) 
   List<TacoOrder> readOrdersDeliveredInSeattle();
   
-  @En
+  // javax.persistence.Entity
+  @Entity(name="") // 对应的 table_name
+  
+  @Id // 标识主键，为空时新增，有值时更新
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  
+  // 对应的列名，后一个参数是对应的数据库类型。
+  @Column(name = "placed_at", columnDefinition = "timestamp")
 ```
+
+接下来说说 mybatis 
+1. 定义好sql之后（这是一般情况下会先做好的事情），利用 mybatis-generator 去生成对应的 entity
+ // 好吧，因为数据库的表其实还没有生成，而是要等到项目启动的时候才去加载……所以这里用不了 mybatis-generator
+   先大致写一下吧，反正也不多 -- 或者，导入mysql，再生成？反正sql文件已经有了。。。。。。
+ // 好吧，mybatis 和 JPA 一起用貌似会报错…… 
+Summary：JPA大概是清楚了，实现 CrudRepository 之后确实简单了很多很多，对于一些没法直接使用语义的方式去执行的sql，用 @Query 的方式
+   也可以很轻松地实现原生的sql。但有一点还不甚明了的是，一对多与多对多的实现是怎么一回事？明天或者这周找个时间再去看看。
