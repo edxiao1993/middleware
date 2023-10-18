@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Data
 @Entity
+//@RestResource
 public class Taco {
 
     @Id

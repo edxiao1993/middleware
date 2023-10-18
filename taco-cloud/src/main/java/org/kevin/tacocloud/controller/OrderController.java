@@ -2,6 +2,8 @@ package org.kevin.tacocloud.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kevin.tacocloud.model.TacoOrder;
+import org.kevin.tacocloud.model.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +29,14 @@ public class OrderController {
     }
 
     @PostMapping
-    public String processOrder(@Valid TacoOrder tacoOrder, SessionStatus sessionStatus) {
+    public String processOrder(@Valid TacoOrder tacoOrder, SessionStatus sessionStatus,
+            Authentication authentication) {
         log.info("Order submitted: {}", tacoOrder);
+
+        // TODO: something with order...
+        User user = (User) authentication.getPrincipal();
+        tacoOrder.setUser(user);
+
         // the session is cleaned up and ready for a new order the next time the user creates a taco ???
         // 存储在 Session 里的对象到这里就结束了？怎么知道结束的对象是 tacoOrder 呢？
         sessionStatus.setComplete();

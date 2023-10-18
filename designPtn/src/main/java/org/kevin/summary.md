@@ -16,6 +16,8 @@
 7. A class should have only one reason to change. (如果不能整理成一个理由去改变一个类，那就说明设计有问题)
 8. Don't call us, we'll call you.(低阶的接口不应该调用高阶的接口)
 
+开闭原则，单一职责原则，里氏替换原则，迪米特法则(最小知道原则)，依赖倒置原则，接口隔离原则
+
 面向对象的设计模式：  
 1.  **Strategy Pattern:**   
     defines a family of algorithms, encapsulates each one, and make them interchangeable. Strategy lets the algorithm vary

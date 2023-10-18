@@ -6,6 +6,7 @@ import org.kevin.tacocloud.model.IngredientType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/3/14 12:34
  */
 @Configuration
+@Profile("dev") // dev 环境下才启用 {"", "", ""} -- 需要多个环境同时起作用的情况下。
 public class InitializeBeans {
 
     /**

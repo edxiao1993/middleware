@@ -33,9 +33,12 @@ public class CountIsland {
 
 
         }
+
+        return -1;
     }
 
     public int numIslands(char[][] grid) {
 
+        return -1;
     }
 }

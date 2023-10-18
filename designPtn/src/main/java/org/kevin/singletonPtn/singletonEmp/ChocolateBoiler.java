@@ -13,6 +13,15 @@ public class ChocolateBoiler {
 
     private static volatile ChocolateBoiler anotherInstance = null;
 
+    private static class InnerClass {
+        private static final ChocolateBoiler INSTANCE_INNER = new ChocolateBoiler();
+    }
+
+    // 3. 内部优化器
+    public static ChocolateBoiler getInnerInstance() {
+        return InnerClass.INSTANCE_INNER;
+    }
+
     // 2. 使用时才初始化
     public static synchronized ChocolateBoiler getInstance() {
         if (anotherInstance == null) {

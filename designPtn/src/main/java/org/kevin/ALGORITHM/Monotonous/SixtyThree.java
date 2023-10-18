@@ -10,7 +10,7 @@ import java.util.Deque;
  * @author Kevin.Zng
  * @date 2022/2/21 00:23
  */
-public class Main {
+public class SixtyThree {
 
     @Test
     public void testMonotonous() {

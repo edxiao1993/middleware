@@ -1,5 +1,37 @@
+#server:
+#  port: 9090
+# java -jar tacocloud-1-SNAPSHOT.jar --server.port=9090
+
+server:
+  port: 8443
+  ssl:
+    # 注意这里的 file://
+    key-store: file:///path/to/mykeys.jks
+    key-store-password: letmein
+    keyp-assword: letmein
 
 spring:
   datasource:
     generate-unique-name: false
     name: tacocloud
+  profiles:
+    active:
+      - prod
+      # export SPRING_PROFILES_ACTIVE=prod
+      # java -jar tacocloud --spring.profiles.active=prod
+
+logging:
+  file:
+    path: /var/logs
+    file: tacocloud.log
+  level:
+    root: WARN
+    org:
+      springframework:
+        security: DEBUG
+
+
+# 自定义属性。注意 org/kevin/tacocloud/model/OrderProp.java
+taco:
+  orders:
+    pageSize: 10

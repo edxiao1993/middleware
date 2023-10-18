@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -23,7 +25,8 @@ import java.util.ArrayList;
  * @date 2022/3/9 00:29
  */
 @Data
-@Entity(name = "taco_order")
+@Entity
+@Table(name = "taco_order")
 public class TacoOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -68,6 +71,9 @@ public class TacoOrder implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Taco> tacos = new ArrayList<>();
+
+    @ManyToOne
+    private User user;
 
     public void addTaco(Taco taco) {
         this.tacos.add(taco);
